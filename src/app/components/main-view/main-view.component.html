@@ -1,0 +1,139 @@
+<app-navbar></app-navbar>
+<div class="container animate__animated animate__fadeIn" [hidden]="isLoading">
+  <mat-card>
+    <mat-card-title>Stocks</mat-card-title>
+    <mat-card-subtitle>Please, select a Stock to show its values</mat-card-subtitle>
+    <mat-card-content>
+      <mat-form-field appearance="standard" class="filter">
+        <mat-label>Filter Stocks</mat-label>
+        <input
+          matInput
+          (keyup)="applyFilter($event)"
+          placeholder="Ex. Bank of the Ozarks "
+          #input
+        >
+      </mat-form-field>
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        class="mat-elevation-z8 w-100"
+        #stocksSort="matSort"
+        matSort
+      >
+        <ng-container matColumnDef="id">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="id"
+          > ID </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+        <ng-container matColumnDef="stock">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="stock"
+          > Stock </th>
+          <td mat-cell *matCellDef="let element"> {{element.stock}} </td>
+        </ng-container>
+        <ng-container matColumnDef="industry">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="industry"
+          > Industry </th>
+          <td mat-cell *matCellDef="let element"> {{element.industry}} </td>
+        </ng-container>
+        <ng-container matColumnDef="sector">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="sector"
+          > Sector </th>
+          <td mat-cell *matCellDef="let element"> {{element.sector}} </td>
+        </ng-container>
+        <ng-container matColumnDef="currency_code">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="currency_code"
+          > Currency Code </th>
+          <td mat-cell *matCellDef="let element"> {{element.currency_code}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns;"
+          (click)="showStock($event, row)"
+          [ngClass]="{'active': row.id === previousId && stockName !== ''}"
+        ></tr>
+      </table>
+      <mat-paginator
+        #stocksPaginator
+        [pageSizeOptions]="[5]"
+        aria-label="Select page of users"
+      ></mat-paginator>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div class="container values-table mb-30 animate__animated" [hidden]="!showValuesTable">
+  <mat-card>
+    <mat-card-title class="mb-30">{{stockName}}</mat-card-title>
+    <mat-card-content class="values-table-container">
+      <table
+        mat-table
+        [dataSource]="dataSourceValues"
+        class="mat-elevation-z8 w-100 h-500"
+        #valuesSort="matSort"
+        matSort
+      >
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let element"> {{stockName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="date">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="date"
+          > Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+        </ng-container>
+        <ng-container matColumnDef="value">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="value"
+          > Value </th>
+          <td mat-cell *matCellDef="let element"> {{element.value}} </td>
+        </ng-container>
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedValuesColumns"
+        ></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedValuesColumns;"></tr>
+      </table>
+      <mat-paginator
+        #valuesPaginator
+        [pageSizeOptions]="[5, 10, 25]"
+        aria-label="Select page of users"
+      ></mat-paginator>
+      <div class="text-right">
+        <button
+          mat-raised-button
+          color="secondary"
+          (click)="openBottomSheet()"
+          class="mr-10"
+        >Try Hiring Jose!</button>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="exportJsonFile()"
+        >Export as JSON</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div class="container" [hidden]="!isLoading">
+  <app-table-loader></app-table-loader>
+</div>

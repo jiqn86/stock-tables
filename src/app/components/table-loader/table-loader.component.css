@@ -1,0 +1,15 @@
+.center-30 {
+  margin: 0 auto;
+  max-width: 30%;
+  text-align: center;
+}
+.center-50 {
+  margin: 0 auto;
+  max-width: 50%;
+  text-align: center;
+}
+
+.input-placeholder {
+  max-width: 50%;
+  padding-top:30px;
+}

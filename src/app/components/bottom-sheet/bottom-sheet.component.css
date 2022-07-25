@@ -1,0 +1,26 @@
+.header-image {
+  background-image: url('/assets/images/jose.jpg');
+  background-size: cover;
+}
+
+.card-middle {
+  max-width: 500px;
+}
+
+.margins {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+mat-card-header {
+  background-color: rgb(71, 69, 69) !important;
+  color: white;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+mat-card-subtitle {
+  color: white;
+}
